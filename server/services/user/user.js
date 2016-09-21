@@ -93,7 +93,7 @@ class UserHandler {
      * @param verifyId
      */
     sendVerifyMail(username, email, verifyId) {
-        const host = 'wwww.languagecourse-guru.com';
+        const host = 'wwww.pulse.app';
         // send email
         const verifyLink = `http://${host}/api/user/verify/${verifyId}`;
         const text = `Hi ${username},
@@ -106,7 +106,7 @@ class UserHandler {
         // send email
         return sendEmail({
             to: email,
-            subject: 'Languagecourse guru: Confirm Your Email',
+            subject: 'Pulse app: Confirm Your Email',
             text,
             html
         });
