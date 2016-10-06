@@ -7,6 +7,8 @@ import mongoose from 'mongoose';
 import config from 'server/config/config';
 import authCheckMiddleware from 'server/middleware/auth-check';
 import services from 'server/services';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const models = join(__dirname, 'server/models');
 const port = process.env.PORT || 1337;
@@ -18,7 +20,10 @@ fs.readdirSync(models)
     .forEach(file => require(join(models, file)));
 
 
-app.use('/api', authCheckMiddleware);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cors());
+app.use('/api/intern', authCheckMiddleware);
 
 // require('server/routes/index')(app);
 services(app);
@@ -41,6 +46,7 @@ function connect() {
             }
         }
     };
+    mongoose.Promise = global.Promise;
     return mongoose.connect(config.db, options).connection;
 }
 

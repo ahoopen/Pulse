@@ -16,9 +16,7 @@ export default (app) => {
         .post(User.login);
 
     app.route('/api/user/register')
-        .post((request, response) => {
-            User.register(request, response);
-        });
+        .post(User.register);
 
     app.route('/api/user/verify/:id')
         .get(User.verify);
