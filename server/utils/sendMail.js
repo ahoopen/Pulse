@@ -12,6 +12,7 @@ export default ({to, subject, text, html}) => new Promise((resolve, reject) => {
         text,
         html
     }, (error, info) => {
+
         if (error) {
             return reject(error);
         }

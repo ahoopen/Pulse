@@ -5,7 +5,7 @@ export default (app) => {
 
     app.route('/api/user/login')
         .get((request, response) => {
-            UserModel.find( {}, (err, users) => {
+            UserModel.find({}, (err, users) => {
                 if (err) {
                     throw err;
                 }
@@ -16,7 +16,9 @@ export default (app) => {
         .post(User.login);
 
     app.route('/api/user/register')
-        .post(User.register);
+        .post(function (request, response) {
+            return User.register(request, response).catch(console.log);
+        });
 
     app.route('/api/user/verify/:id')
         .get(User.verify);

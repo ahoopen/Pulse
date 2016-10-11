@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -20,28 +20,16 @@ const UserSchema = new Schema({
     },
     isValidEmail: {
         type: Boolean
-    },
-    name: {
-        type: String
-    },
-    surname: {
-        type: String
-    },
-    address: {
-        type: String
-    },
-    dateOfBirth: {
-        type: String
     }
 });
 
 
-UserSchema.statics.findUser = function (options) {
+UserSchema.statics.findUser = function ({ email, password }) {
     return new Promise((resolve, reject) => {
         this.findOne({
                 $and: [
-                    {email: options.email},
-                    {password: options.password},
+                    {email},
+                    {password},
                     {isValidEmail: true}]
             },
             '-password -verifyId -v -_id -isValidEmail')

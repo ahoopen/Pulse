@@ -71,10 +71,10 @@ class UserHandler {
                 isValidEmail: false
             });
 
-            // TODO check breaks on production
-            if (process.env.NODE_ENV !== 'test') {
+            // // TODO check breaks on production
+            // if (process.env.NODE_ENV !== 'test') {
                 await this.sendVerifyMail(username, email, verifyId);
-            }
+            // }
 
             response.json({
                 success: true,
