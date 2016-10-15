@@ -2,21 +2,24 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {TextField, FlatButton, Card, CardActions} from 'material-ui';
-import {UserLogin} from '../actions/index';
+import {UserLogin} from '../actions/login.action';
 
 class Login extends Component {
 
-    constructor(props) {
-        super(props);
-
-        console.log(props);
-    }
-
+    static contextTypes = {
+        router: React.PropTypes.object
+    };
 
     login() {
         const {dispatch} = this.props;
 
         dispatch(UserLogin(this.refs.username.getValue(), this.refs.password.getValue()));
+    }
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.isAuthenticated) {
+            this.context.router.push('/dashboard');
+        }
     }
 
     render() {
@@ -34,9 +37,9 @@ class Login extends Component {
                         multiLine={false}
                         fullWidth={true}
                         type="password"/>
-                    {/*<div style={{float: 'right'}}>*/}
                     <CardActions>
-                        <FlatButton id="login-button" label="Login" onClick={() => this.login() }/>
+                        <FlatButton id="login-button" label="Login" disabled={this.props.isAuthenticated}
+                                    onClick={() => this.login() }/>
                     </CardActions>
                 </Card>
             </div>
@@ -45,7 +48,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return state.login;
 };
 
 export default connect(

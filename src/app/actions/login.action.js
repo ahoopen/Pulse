@@ -1,4 +1,5 @@
 import * as loginEnum from '../constants/login.constants';
+import {browserHistory} from 'react-router';
 
 export const UserLoginRequest = () => ({
     type: loginEnum.USER_LOGIN_REQUEST
@@ -16,33 +17,36 @@ export const UserLoginFailed = (error) => ({
     }
 });
 
-export const isValidResponse = (response) => {
+const isValidResponse = (response) => {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
 };
 
-export const UserLogin = function(email, password) {
-    console.log(email, password);
-
+export const redirect = function (route) {
     return (dispatch) => {
-        console.log('-->', dispatch);
+        dispatch(browserHistory.push(route));
+    }
+};
+
+export const UserLogin = function (email, password) {
+    return (dispatch) => {
         dispatch(UserLoginRequest());
 
-        return fetch('/api/user/login', {
+        return fetch('http://127.0.0.1:1337/api/user/login', {
             method: 'post',
-            credentials: 'include',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({email, password})
         })
-            .then(isValidResponse)
+        // .then(isValidResponse)
             .then(response => response.json())
             .then((response) => {
                 if (response.success) {
-                    dispatch(UserLoginSuccess(response));
+                    dispatch(UserLoginSuccess(response.token));
+                    // dispatch(redirect('/register'));
                 } else {
                     dispatch(UserLoginFailed({
                         response: {
