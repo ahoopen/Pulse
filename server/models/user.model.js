@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+import bcrypt from 'bcrypt-nodejs';
 
 const UserSchema = new Schema({
     username: {
@@ -13,6 +14,8 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
+        unique: true,
+        lowercase: true,
         required: true
     },
     verifyId: {
@@ -24,7 +27,26 @@ const UserSchema = new Schema({
 });
 
 
-UserSchema.statics.findUser = function ({ email, password }) {
+// on save, encrypt password
+UserSchema.pre('save', function (next) {
+    const user = this;
+
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            return next(err);
+        }
+
+        bcrypt.hash(user.password, salt, null, function (err, hash) {
+            if (err) {
+                return next(err);
+            }
+            user.password = hash;
+            next();
+        })
+    })
+});
+
+UserSchema.statics.findUser = function ({email, password}) {
     return new Promise((resolve, reject) => {
         this.findOne({
                 $and: [
