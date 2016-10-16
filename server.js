@@ -4,8 +4,9 @@ import fs from 'fs';
 import {join} from 'path';
 import express from 'express';
 import mongoose from 'mongoose';
-import config from 'server/config/config';
-import authCheckMiddleware from 'server/middleware/auth-check';
+import { config } from 'server/config/config';
+import passport from 'passport';
+const requireAuth = require('server/middleware/passport');
 import services from 'server/services';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -23,7 +24,12 @@ fs.readdirSync(models)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
-app.use('/api/intern', authCheckMiddleware);
+
+const test = passport.authenticate('jwt', { session: false });
+
+app.get('/api/intern', test, function(req, res) {
+    res.send({ hi: 'there'});
+});
 
 // require('server/routes/index')(app);
 services(app);
