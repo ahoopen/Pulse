@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+/**
+ * Check if the user is authenticated
+ * if not redirect to the home page
+ *
+ * @param ComposedComponent
+ * @returns {*}
+ */
 export default function (ComposedComponent) {
     class Authentication extends Component {
 
@@ -9,8 +16,6 @@ export default function (ComposedComponent) {
         };
 
         componentWillMount() {
-            console.log(this.props.authenticated);
-
             if (!this.props.authenticated) {
                 this.context.router.push('/');
             }
@@ -28,8 +33,6 @@ export default function (ComposedComponent) {
     }
 
     function mapStateToProps(state) {
-        console.log(state);
-
         return {
             authenticated: state.login.isAuthenticated
         };
