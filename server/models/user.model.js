@@ -46,6 +46,16 @@ UserSchema.pre('save', function (next) {
     })
 });
 
+UserSchema.methods.comparePassword = function (candidatePassword, callback) {
+    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) {
+            return callback(err);
+        }
+
+        callback(null, isMatch);
+    });
+};
+
 UserSchema.statics.findUser = function ({email, password}) {
     return new Promise((resolve, reject) => {
         this.findOne({

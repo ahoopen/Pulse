@@ -1,21 +1,40 @@
 import uuid from 'node-uuid';
-import jwt from 'jsonwebtoken';
+import jwt from 'jwt-simple';
 import User from 'server/models/user.model';
 import UserReset from 'server/models/reset.user.model';
 import sendEmail from 'server/utils/sendMail';
-import hash from 'server/utils/hash';
+import { config } from 'server/config/config';
 
 class UserHandler {
 
+    /**
+     * sub: subject of jwt token
+     * iat: issued at time
+     *
+     * @param user
+     * @returns {*}
+     */
+    tokenForUser(user) {
+        const timestamp = new Date().getTime();
+        return jwt.encode({ sub: user._id, iat: timestamp }, config.secret);
+    }
+
+    signin(request, response) {
+        // user has already had there email and password authenticated
+        // just need to give them a token
+        response.send({
+            token: this.tokenForUser(request.user)
+        });
+    }
+
     async login(request, response) {
         const {email, password} = request.body;
-        const hashedPassword = hash(password);
 
         try {
             // find user
             const user = await User.findUser({
                 email,
-                password: hashedPassword
+                password
             });
 
             // check if user was found
@@ -26,11 +45,6 @@ class UserHandler {
                 });
                 return;
             }
-
-            const jwtconfig = {
-                secret: '$fdasf%Ts+__!REA!x'
-            };
-            const token = jwt.sign(user, jwtconfig.secret, {expiresIn: '1d'});
 
             response.json({
                 success: true,
@@ -49,23 +63,21 @@ class UserHandler {
      */
     async register(request, response) {
         const {username, password, email} = request.body;
-        const hashedPassword = hash(password);
         const verifyId = uuid.v4();
 
         try {
-            const userExist = await User.findOne({email});
+            const existingUser = await User.findOne({email});
 
-            if (userExist) {
-                response.json({
+            if (existingUser) {
+                return response.json({
                     success: false,
                     errorMessage: 'User already exists'
                 });
-                return;
             }
 
             const user = await User.create({
                 username,
-                password: hashedPassword,
+                password,
                 email,
                 verifyId,
                 isValidEmail: false
@@ -73,12 +85,13 @@ class UserHandler {
 
             // // TODO check breaks on production
             // if (process.env.NODE_ENV !== 'test') {
-                await this.sendVerifyMail(username, email, verifyId);
+            //     await this.sendVerifyMail(username, email, verifyId);
             // }
 
             response.json({
                 success: true,
-                token: user.verifyId
+                // token: user.verifyId
+                token: this.tokenForUser(user)
             });
         } catch (e) {
             throw e;

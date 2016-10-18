@@ -1,5 +1,9 @@
 import User from './user';
 import UserModel from 'server/models/user.model';
+import passport from 'passport';
+const requireAuth = require('server/middleware/passport');
+
+const requireSignin = passport.authenticate('local', { session: false });
 
 export default (app) => {
 
@@ -13,7 +17,7 @@ export default (app) => {
                 response.json(users);
             });
         })
-        .post(User.login);
+        .post(requireSignin, User.signin);
 
     app.route('/api/user/register')
         .post(function (request, response) {
