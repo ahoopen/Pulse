@@ -17,7 +17,9 @@ export default (app) => {
                 response.json(users);
             });
         })
-        .post(requireSignin, User.signin);
+        .post(requireSignin, function(request, response) {
+            return User.signin(request, response);
+        });
 
     app.route('/api/user/register')
         .post(function (request, response) {

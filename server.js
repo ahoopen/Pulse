@@ -25,9 +25,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 
-const test = passport.authenticate('jwt', { session: false });
+const auth = passport.authenticate('jwt', { session: false });
 
-app.get('/api/intern', test, function(req, res) {
+app.get('/api/intern', auth, function(req, res) {
     res.send({ hi: 'there'});
 });
 

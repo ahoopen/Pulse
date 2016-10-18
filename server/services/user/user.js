@@ -22,7 +22,7 @@ class UserHandler {
     signin(request, response) {
         // user has already had there email and password authenticated
         // just need to give them a token
-        response.send({
+        response.json({
             token: this.tokenForUser(request.user)
         });
     }
