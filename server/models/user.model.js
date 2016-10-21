@@ -3,20 +3,21 @@ const Schema = mongoose.Schema;
 import bcrypt from 'bcrypt-nodejs';
 
 const UserSchema = new Schema({
-    username: {
+    email: {
         type: String,
+        unique: true,
+        lowercase: true,
         required: true,
-        unique: true
+        validate: function(email) {
+            return /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
+        }
     },
     password: {
         type: String,
         required: true
     },
-    email: {
+    username: {
         type: String,
-        unique: true,
-        lowercase: true,
-        required: true
     },
     verifyId: {
         type: String
