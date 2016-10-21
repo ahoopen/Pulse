@@ -62,7 +62,7 @@ class UserHandler {
      * @param response
      */
     async register(request, response) {
-        const {username, password, email} = request.body;
+        const { password, email } = request.body;
         const verifyId = uuid.v4();
 
         try {
@@ -76,7 +76,6 @@ class UserHandler {
             }
 
             const user = await User.create({
-                username,
                 password,
                 email,
                 verifyId,
@@ -90,7 +89,6 @@ class UserHandler {
 
             response.json({
                 success: true,
-                // token: user.verifyId
                 token: this.tokenForUser(user)
             });
         } catch (e) {

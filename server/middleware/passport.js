@@ -17,7 +17,7 @@ const localLogin = new LocalStrategy(localOptions, function (email, password, do
             return done(err);
         }
         if (!user) {
-            return done(null, false);
+            return done(null, false, { message: 'Incorrect username.' });
         }
 
         user.comparePassword(password, function (err, isMatch) {
@@ -25,7 +25,7 @@ const localLogin = new LocalStrategy(localOptions, function (email, password, do
                 return done(err);
             }
             if (!isMatch) {
-                return done(null, false);
+                return done(null, false, { message: 'Incorrect password.' });
             }
 
             return done(null, user);
