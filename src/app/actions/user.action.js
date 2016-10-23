@@ -1,20 +1,52 @@
-import * as loginEnum from '../constants/user.constants';
+import * as userEnum from '../constants/user.constants';
 
 export const UserLoginRequest = () => ({
-    type: loginEnum.USER_LOGIN_REQUEST
+    type: userEnum.USER_LOGIN_REQUEST
 });
 
 export const UserLoginSuccess = (response) => ({
-    type: loginEnum.USER_LOGIN_SUCCESS,
+    type: userEnum.USER_LOGIN_SUCCESS,
     payload: response
 });
 
 export const UserLoginFailed = (error) => ({
-    type: loginEnum.USER_LOGIN_FAILURE,
+    type: userEnum.USER_LOGIN_FAILURE,
     payload: {
         status: error.response.status
     }
 });
+
+export const UserPasswordResetSuccess = (response) => ({
+    type: userEnum.USER_PASSWORD_RESET_SUCCESS,
+    payload: response
+});
+
+export const UserPasswordResetFailed = (response) => ({
+    type: userEnum.USER_PASSWORD_RESET_FAILURE,
+    payload: response
+});
+
+export const UserPasswordReset = (email) => {
+    return (dispatch) => {
+        return fetch('http://127.0.0.1:1337/api/user/password/reset', {
+            method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email})
+        })
+            .then(response => response.json())
+            .then((response) => {
+                if (response.success) {
+                    dispatch(UserPasswordResetSuccess(response));
+                } else {
+                    dispatch(UserPasswordResetFailed(response.errorMessage));
+                }
+            })
+    }
+};
+
 
 // const isValidResponse = (response) => {
 //     if (response.status >= 200 && response.status < 300) {

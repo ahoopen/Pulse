@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { UserActivate } from '../../actions/register.action';
-import { UserLoginSuccess } from '../../actions/login.action';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {UserActivate} from '../../actions/register.action';
+import {UserLoginSuccess} from '../../actions/user.action';
 
 import {
     Paper,
@@ -46,16 +46,14 @@ class Activate extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        activateAccount: (data) => {
-            dispatch(UserActivate(data));
-        },
-        loginSuccess: (token) => {
-            dispatch(UserLoginSuccess(token));
-        }
+const mapDispatchToProps = (dispatch) => ({
+    activateAccount: (data) => {
+        dispatch(UserActivate(data));
+    },
+    loginSuccess: (token) => {
+        dispatch(UserLoginSuccess(token));
     }
-};
+});
 
 export default connect(
     (state) => state.register,

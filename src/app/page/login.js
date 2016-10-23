@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {TextField, FlatButton, Card, CardActions} from 'material-ui';
-import {UserLogin} from '../actions/login.action';
+import {
+    TextField,
+    FlatButton,
+    RaisedButton,
+    Card,
+    CardActions
+} from 'material-ui';
+import {UserLogin} from '../actions/user.action';
 
 class Login extends Component {
 
@@ -13,6 +19,10 @@ class Login extends Component {
     login() {
         const { email, password  } = this.refs;
         this.props.login(email.getValue(), password.getValue());
+    }
+
+    passwordReset() {
+        this.context.router.push('password/forgotten');
     }
 
     componentWillUpdate(nextProps) {
@@ -43,8 +53,13 @@ class Login extends Component {
                     fullWidth={true}
                     type="password"/>
                 <CardActions>
-                    <FlatButton id="login-button" label="Login" disabled={this.props.isAuthenticated}
-                                onClick={() => this.login() }/>
+                    <FlatButton label="Forgot password" onClick={() => this.passwordReset() }/>
+                    />
+                    <RaisedButton
+                        label="Login"
+                        primary={true}
+                        disabled={this.props.isAuthenticated}
+                        onClick={() => this.login() }/>
                 </CardActions>
             </Card>
         );
@@ -60,6 +75,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-    (state) => state.login,
+    (state) => state.user,
     mapDispatchToProps
 )(Login);

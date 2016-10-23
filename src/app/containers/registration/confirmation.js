@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {
     RaisedButton,
     FlatButton,
-    Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn
+    Table, TableBody, TableRow, TableRowColumn
 } from 'material-ui';
 
 class Confirmation extends Component {

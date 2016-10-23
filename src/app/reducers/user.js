@@ -2,6 +2,8 @@ import {
     USER_LOGIN_REQUEST,
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAILURE,
+    USER_PASSWORD_RESET_SUCCESS,
+    USER_PASSWORD_RESET_FAILURE,
     USER_LOGOUT
 } from '../constants/user.constants';
 
@@ -37,6 +39,17 @@ const LoginReducer = ( (state = initialState, action) => {
                 userName: null,
                 statusText: `Authentication Error: ${action.payload.status} ${action.payload.statusText}`
 
+            };
+
+        case USER_PASSWORD_RESET_SUCCESS:
+            return {
+                ...state,
+                isPasswordReset: true
+            };
+        case USER_PASSWORD_RESET_FAILURE:
+            return {
+                ...state,
+                errorMessage: action.payload
             };
         case USER_LOGOUT:
             return { ...state};

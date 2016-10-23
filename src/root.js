@@ -6,6 +6,8 @@ import App from './app/App';
 import Login from './app/page/login';
 import RegisterFlow from './app/containers/registration/registration';
 import Activate from './app/containers/registration/activate';
+import PasswordReset from './app/containers/registration/password-reset';
+import PasswordChange from './app/containers/registration/password-change';
 import Dashboard from './app/page/dashboard';
 import requireAuthentication from './app/components/authentication';
 
@@ -24,6 +26,10 @@ const Root = ({store}) => (
                 <Route path='login' component={Login}/>
                 <Route path='activate' component={Activate}/>
                 <Route path='dashboard' component={requireAuthentication(Dashboard)}/>
+                <Route path='password'>
+                    <Route path='forgotten' component={PasswordReset} />
+                    <Route path='change' component={requireAuthentication(PasswordChange)} />
+                </Route>
             </Route>
         </Router>
     </Provider>
