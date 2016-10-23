@@ -3,7 +3,7 @@ import {
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAILURE,
     USER_LOGOUT
-} from '../constants/login.constants';
+} from '../constants/user.constants';
 
 const initialState = {
     token: null,

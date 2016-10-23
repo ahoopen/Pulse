@@ -64,9 +64,7 @@ export const UserRegister = (data) => {
         })
         .then(response => response.json())
         .then((response) => {
-            response.success ? dispatch(UserRegisterSuccess(response))
-                : dispatch(UserRegisterFailed(response))
-
+            response.success ? dispatch(UserRegisterSuccess(response)) : dispatch(UserRegisterFailed(response))
         })
         .catch(UserRegisterFailed());
     }

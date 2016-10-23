@@ -42,7 +42,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-    return state.login;
+    return state.user;
 }
 
 export default connect(

@@ -1,5 +1,4 @@
-import * as loginEnum from '../constants/login.constants';
-import {browserHistory} from 'react-router';
+import * as loginEnum from '../constants/user.constants';
 
 export const UserLoginRequest = () => ({
     type: loginEnum.USER_LOGIN_REQUEST
@@ -17,11 +16,11 @@ export const UserLoginFailed = (error) => ({
     }
 });
 
-const isValidResponse = (response) => {
-    if (response.status >= 200 && response.status < 300) {
-        return response;
-    }
-};
+// const isValidResponse = (response) => {
+//     if (response.status >= 200 && response.status < 300) {
+//         return response;
+//     }
+// };
 
 export const UserLogin = function (email, password) {
     return (dispatch) => {

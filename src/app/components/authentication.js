@@ -34,7 +34,7 @@ export default function (ComposedComponent) {
 
     function mapStateToProps(state) {
         return {
-            authenticated: state.login.isAuthenticated
+            authenticated: state.user.isAuthenticated
         };
     }
 
