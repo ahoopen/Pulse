@@ -26,6 +26,11 @@ export default (app) => {
             return User.register(request, response).catch(console.log);
         });
 
+    app.route('/api/user/activate')
+        .post(function(request, response) {
+            return User.activate(request, response).catch(console.log);
+        });
+
     app.route('/api/user/verify/:id')
         .get(User.verify);
 

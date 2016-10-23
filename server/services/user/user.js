@@ -23,6 +23,7 @@ class UserHandler {
         // user has already had there email and password authenticated
         // just need to give them a token
         response.json({
+            success: true,
             token: this.tokenForUser(request.user)
         });
     }
@@ -62,8 +63,15 @@ class UserHandler {
      * @param response
      */
     async register(request, response) {
-        const { password, email } = request.body;
-        const verifyId = uuid.v4();
+        const {
+            name,
+            lastname,
+            password,
+            email
+        } = request.body;
+        // const verifyId = uuid.v4();
+        //TODO use verifyId when email server is set up.
+        const verifyId = 123;
 
         try {
             const existingUser = await User.findOne({email});
@@ -76,6 +84,8 @@ class UserHandler {
             }
 
             const user = await User.create({
+                name,
+                lastname,
                 password,
                 email,
                 verifyId,
@@ -120,6 +130,45 @@ class UserHandler {
             subject: 'Pulse app: Confirm Your Email',
             text,
             html
+        });
+    }
+
+    /**
+     * Activate user
+     *
+     * @param request
+     * @param response
+     */
+
+    //TODO refactor to merge with verify method
+    async activate(request, response) {
+        const { activateCode } = request.body;
+
+        const user = await User.findOne({
+            verifyId: activateCode,
+            isValidEmail: false
+        });
+
+        if (!user) {
+            response.json({
+                success: false,
+                errorMessage: 'Incorrect verification token!'
+            });
+            return;
+        }
+
+        try {
+            await User.update({_id: user._id}, {
+                isValidEmail: true,
+                verifyId: '0'
+            });
+        } catch (e) {
+            throw e;
+        }
+
+        response.json({
+            success: true,
+            token: this.tokenForUser(user)
         });
     }
 
