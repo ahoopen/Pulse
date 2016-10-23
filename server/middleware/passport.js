@@ -12,7 +12,11 @@ const jwtOptions = {
 
 const localOptions = {usernameField: 'email'};
 const localLogin = new LocalStrategy(localOptions, function (email, password, done) {
-    User.findOne({email}, function (err, user) {
+    User.findOne({
+        $and: [
+            {email},
+            {isValidEmail: true}]
+    }, function (err, user) {
         if (err) {
             return done(err);
         }
