@@ -7,17 +7,17 @@ const UserSchema = new Schema({
         type: String,
         unique: true,
         lowercase: true,
-        required: true,
-        validate: function(email) {
-            return /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
-        }
+        required: true
     },
     password: {
         type: String,
         required: true
     },
-    username: {
+    name: {
         type: String,
+    },
+    lastname: {
+        type: String
     },
     verifyId: {
         type: String
