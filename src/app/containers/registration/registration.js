@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
+import {UserRegister} from '../../actions/register.action';
 
 import {
     Step,
@@ -47,7 +49,7 @@ class Registration extends Component {
     }
 
     submitRegistration() {
-        console.log(this.fieldValues);
+        this.props.saveRegistration(this.fieldValues);
 
         this.nextStep();
     }
@@ -104,4 +106,20 @@ class Registration extends Component {
         );
     }
 }
-export default Registration;
+
+const mapStateToProps = (state) => {
+    return state;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      saveRegistration: (data) => {
+          dispatch(UserRegister(data));
+      }
+  }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Registration);

@@ -19,12 +19,12 @@ class Confirmation extends Component {
                             <TableRowColumn>{this.props.fieldValues.name}</TableRowColumn>
                         </TableRow>
                         <TableRow>
-                            <TableRowColumn>Email:</TableRowColumn>
-                            <TableRowColumn>{this.props.fieldValues.email}</TableRowColumn>
+                            <TableRowColumn>Surname:</TableRowColumn>
+                            <TableRowColumn>{this.props.fieldValues.lastname}</TableRowColumn>
                         </TableRow>
                         <TableRow>
-                            <TableRowColumn>Surname:</TableRowColumn>
-                            <TableRowColumn>{this.props.fieldValues.surname}</TableRowColumn>
+                            <TableRowColumn>Email:</TableRowColumn>
+                            <TableRowColumn>{this.props.fieldValues.email}</TableRowColumn>
                         </TableRow>
                     </TableBody>
                 </Table>

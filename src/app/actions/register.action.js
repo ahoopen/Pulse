@@ -17,8 +17,6 @@ export const UserRegisterFailed = (error) => ({
 });
 
 export const UserRegister = (data) => {
-    const {username, password, email} = data;
-
     return (dispatch) => {
         dispatch(UserRegisterRequest());
 
@@ -28,7 +26,7 @@ export const UserRegister = (data) => {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({username, email, password})
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(json => dispatch(UserRegisterSuccess(json)))

@@ -12,7 +12,7 @@ class UserFields extends Component {
 
         var data = {
             name: this.refs.name.getValue(),
-            surname: this.refs.surname.getValue(),
+            lastname: this.refs.lastname.getValue(),
         };
 
         this.props.saveValues(data);
@@ -24,17 +24,17 @@ class UserFields extends Component {
             <div>
                 <TextField
                     ref='name'
-                    floatingLabelText='Name'
+                    floatingLabelText='First name'
                     multiLine={false}
                     fullWidth={true}
                     defaultValue={this.props.fieldValues.name}
                 />
                 <TextField
-                    ref='surname'
-                    floatingLabelText='Surname'
+                    ref='lastname'
+                    floatingLabelText='Last name'
                     multiLine={false}
                     fullWidth={true}
-                    defaultValue={this.props.fieldValues.surname}
+                    defaultValue={this.props.fieldValues.lastname}
                 />
                 <div className="registration__controls">
                     <FlatButton
