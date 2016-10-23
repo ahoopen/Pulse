@@ -107,10 +107,6 @@ class Registration extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return state;
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
       saveRegistration: (data) => {
@@ -120,6 +116,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-    mapStateToProps,
+    (state) => state,
     mapDispatchToProps
 )(Registration);
