@@ -11,9 +11,8 @@ class Login extends Component {
     };
 
     login() {
-        const {dispatch} = this.props;
-
-        dispatch(UserLogin(this.refs.username.getValue(), this.refs.password.getValue()));
+        const { email, password  } = this.refs;
+        this.props.login(email.getValue(), password.getValue());
     }
 
     componentWillUpdate(nextProps) {
@@ -23,34 +22,44 @@ class Login extends Component {
     }
 
     render() {
+        let errMessage = '';
+
+        if(!this.props.isAuthenticated) {
+            errMessage = <div>User is not authenticated!</div>;
+        }
+
         return (
-            <div className="login">
-                <Card>
-                    <TextField
-                        ref='username'
-                        floatingLabelText='Username'
-                        multiLine={false}
-                        fullWidth={true}/>
-                    <TextField
-                        ref='password'
-                        floatingLabelText='Password'
-                        multiLine={false}
-                        fullWidth={true}
-                        type="password"/>
-                    <CardActions>
-                        <FlatButton id="login-button" label="Login" disabled={this.props.isAuthenticated}
-                                    onClick={() => this.login() }/>
-                    </CardActions>
-                </Card>
-            </div>
+            <Card className="login">
+                <div>{errMessage}</div>
+                <TextField
+                    ref='email'
+                    floatingLabelText='Email'
+                    multiLine={false}
+                    fullWidth={true}/>
+                <TextField
+                    ref='password'
+                    floatingLabelText='Password'
+                    multiLine={false}
+                    fullWidth={true}
+                    type="password"/>
+                <CardActions>
+                    <FlatButton id="login-button" label="Login" disabled={this.props.isAuthenticated}
+                                onClick={() => this.login() }/>
+                </CardActions>
+            </Card>
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    return state.login;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login(email, password) {
+            dispatch(UserLogin(email, password));
+        }
+    }
 };
 
 export default connect(
-    mapStateToProps
+    (state) => state.login,
+    mapDispatchToProps
 )(Login);

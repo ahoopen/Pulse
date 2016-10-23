@@ -4,11 +4,9 @@ import {
     USER_LOGIN_FAILURE,
     USER_LOGOUT
 } from '../constants/login.constants';
-import jwtDecode from 'jwt-decode';
 
 const initialState = {
     token: null,
-    userName: null,
     isAuthenticated: false,
     isAuthenticating: false,
     statusText: null
@@ -28,9 +26,7 @@ const LoginReducer = ( (state = initialState, action) => {
                 isAuthenticating: false,
                 isAuthenticated: true,
                 token: action.payload,
-                userName: jwtDecode(action.payload).username,
-                statusText: 'You have been successfully logged in.'
-
+                statusText: null
             };
         case USER_LOGIN_FAILURE:
             return {

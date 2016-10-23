@@ -23,12 +23,6 @@ const isValidResponse = (response) => {
     }
 };
 
-export const redirect = function (route) {
-    return (dispatch) => {
-        dispatch(browserHistory.push(route));
-    }
-};
-
 export const UserLogin = function (email, password) {
     return (dispatch) => {
         dispatch(UserLoginRequest());
@@ -46,7 +40,6 @@ export const UserLogin = function (email, password) {
             .then((response) => {
                 if (response.success) {
                     dispatch(UserLoginSuccess(response.token));
-                    // dispatch(redirect('/register'));
                 } else {
                     dispatch(UserLoginFailed({
                         response: {
