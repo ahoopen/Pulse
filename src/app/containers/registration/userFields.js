@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     TextField,
     RaisedButton,
-    FlatButton
+    FlatButton,
 } from 'material-ui';
 
 class UserFields extends Component {
@@ -11,8 +11,8 @@ class UserFields extends Component {
         e.preventDefault();
 
         var data = {
-            name    : this.refs.name.getValue(),
-            surname : this.refs.surname.getValue(),
+            name: this.refs.name.getValue(),
+            surname: this.refs.surname.getValue(),
         };
 
         this.props.saveValues(data);
@@ -36,11 +36,16 @@ class UserFields extends Component {
                     fullWidth={true}
                     defaultValue={this.props.fieldValues.surname}
                 />
-                <FlatButton className="btn -default pull-left" onClick={this.props.previousStep}>Back</FlatButton>
-                <RaisedButton
-                    primary={true}
-                    label="Save and continue"
-                    onClick={(e)=> this.nextStep(e)} />
+                <div className="registration__controls">
+                    <FlatButton
+                        className="btn -default pull-left"
+                        label="Back"
+                        onClick={this.props.previousStep} />
+                    <RaisedButton
+                        primary={true}
+                        label="Next"
+                        onClick={(e)=> this.nextStep(e)}/>
+                </div>
             </div>
         );
     }

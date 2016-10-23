@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     TextField,
-    FlatButton
+    FlatButton,
 } from 'material-ui';
 
 class AccountFields extends Component {
@@ -10,8 +10,8 @@ class AccountFields extends Component {
         e.preventDefault();
 
         var data = {
-            email    : this.refs.email.getValue(),
-            password : this.refs.password.getValue(),
+            email: this.refs.email.getValue(),
+            password: this.refs.password.getValue(),
         };
 
         this.props.saveValues(data);
@@ -36,9 +36,11 @@ class AccountFields extends Component {
                     type="password"
                     defaultValue={this.props.fieldValues.password}
                 />
-                <FlatButton
-                    label="Save and continue"
-                    onClick={(e)=> this.nextStep(e)} />
+                <div className="registration__controls">
+                    <FlatButton
+                        label="Next"
+                        onClick={(e)=> this.nextStep(e)}/>
+                </div>
             </div>
         );
     }

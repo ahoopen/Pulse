@@ -84,7 +84,7 @@ class Registration extends Component {
 
     render() {
         return (
-            <Paper>
+            <Paper className="registration">
                 <Stepper activeStep={this.state.step}>
                     <Step>
                         <StepLabel>Create account</StepLabel>

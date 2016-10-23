@@ -1,1 +1,6 @@
-@import "login/base";
+@import "login/all";
+@import "registration/all";
+
+body {
+    margin: 0;
+}
