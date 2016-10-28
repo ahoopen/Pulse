@@ -28,7 +28,7 @@ const Root = ({store}) => (
                 <Route path='dashboard' component={requireAuthentication(Dashboard)}/>
                 <Route path='password'>
                     <Route path='forgotten' component={PasswordReset} />
-                    <Route path='change' component={requireAuthentication(PasswordChange)} />
+                    <Route path='change/:id' component={PasswordChange} />
                 </Route>
             </Route>
         </Router>
