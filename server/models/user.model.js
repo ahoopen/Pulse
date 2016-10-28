@@ -32,19 +32,32 @@ const UserSchema = new Schema({
 UserSchema.pre('save', function (next) {
     const user = this;
 
-    bcrypt.genSalt(10, function (err, salt) {
-        if (err) {
-            return next(err);
-        }
-
-        bcrypt.hash(user.password, salt, null, function (err, hash) {
-            if (err) {
-                return next(err);
-            }
-            user.password = hash;
+    encryptPassword(user.password)
+        .then((hashedPassword) => {
+            user.password = hashedPassword;
             next();
-        })
-    })
+        });
+});
+
+UserSchema.pre('update', function (next) {
+    let update = this.getUpdate();
+    if (update.$set) {
+        update = update.$set;
+    }
+
+    if (update.password) {
+        encryptPassword(update.password)
+            .then((hashedPassword) => {
+                this.update({}, {
+                    $set: {
+                        password: hashedPassword
+                    }
+                });
+            })
+            .then(() => next());
+    } else {
+        next();
+    }
 });
 
 UserSchema.methods.comparePassword = function (candidatePassword, callback) {
@@ -54,6 +67,23 @@ UserSchema.methods.comparePassword = function (candidatePassword, callback) {
         }
 
         callback(null, isMatch);
+    });
+};
+
+const encryptPassword = function (field) {
+    return new Promise((resolve, reject) => {
+        bcrypt.genSalt(10, function (err, salt) {
+            if (err) {
+                return reject(err);
+            }
+
+            bcrypt.hash(field, salt, null, function (err, hash) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(hash);
+            });
+        });
     });
 };
 
