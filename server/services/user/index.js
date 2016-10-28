@@ -39,6 +39,8 @@ export default (app) => {
 
     app.route('/api/user/password/reset/:id')
         .get(User.resetPasswordChange)
-        .post(User.resetPasswordAccept);
+        .post(function(request,response) {
+            return User.resetPasswordAccept(request,response).catch(console.log);
+        });
 
 };

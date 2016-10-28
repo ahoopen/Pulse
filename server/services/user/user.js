@@ -28,34 +28,6 @@ class UserHandler {
         });
     }
 
-    async login(request, response) {
-        const {email, password} = request.body;
-
-        try {
-            // find user
-            const user = await User.findUser({
-                email,
-                password
-            });
-
-            // check if user was found
-            if (!user) {
-                response.json({
-                    success: false,
-                    errorMessage: 'Email or password isnt correct'
-                });
-                return;
-            }
-
-            response.json({
-                success: true,
-                token
-            });
-        } catch (e) {
-            throw e;
-        }
-    }
-
     /**
      * Register a user
      *
@@ -239,29 +211,32 @@ class UserHandler {
              Or open this in a browser: ${resetLink}`;
 
             // TODO check breaks on production
-            if (process.env.NODE_ENV !== 'test') {
-                // send email
-                await sendEmail({
-                    to: email,
-                    subject: 'Pulse app: password reset',
-                    text,
-                    html
-                });
-            }
+            // if (process.env.NODE_ENV !== 'test') {
+            //     // send email
+            //     await sendEmail({
+            //         to: email,
+            //         subject: 'Pulse app: password reset',
+            //         text,
+            //         html
+            //     });
+            // }
 
             response.json({
-                success: true
+                success: true,
+                resetId
             });
 
         } else {
             response.json({
-                success: false
+                success: false,
+                errorMessage: 'Email doesnt exist'
             });
         }
     }
 
     async resetPasswordChange(request, response) {
         const {id: resetId} = request.params;
+
         if (resetId === '-1') {
             response.json({
                 success: false,
@@ -316,12 +291,12 @@ class UserHandler {
             return;
         }
 
-        const hashedPassword = hash(password);
-        await User.update({_id: user.userId}, {password: hashedPassword});
+        await User.update({_id: user.userId}, {$set: { password }});
         await UserReset.update({userId: user.userId}, {token: '-1', date: 0});
 
         response.json({
             success: true,
+            token: this.tokenForUser(user.userId),
             message: 'Password reset successful completed'
         });
     }
