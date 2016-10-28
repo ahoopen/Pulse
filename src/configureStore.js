@@ -21,7 +21,7 @@ const configureStore = () => {
 
     store.subscribe(() => {
         // saveState({
-        //     todos: store.getState().todos
+        //     todos: store.getState()
         // });
     });
 

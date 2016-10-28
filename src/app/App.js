@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../scss/app.scss';
-import {Link} from 'react-router'
+import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {AppBar} from 'material-ui';
 

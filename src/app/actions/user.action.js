@@ -47,7 +47,6 @@ export const UserPasswordReset = (email) => {
     }
 };
 
-
 // const isValidResponse = (response) => {
 //     if (response.status >= 200 && response.status < 300) {
 //         return response;
