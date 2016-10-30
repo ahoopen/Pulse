@@ -52,7 +52,12 @@ const LoginReducer = ( (state = initialState, action) => {
                 errorMessage: action.payload
             };
         case USER_LOGOUT:
-            return { ...state};
+            return {
+                ...state,
+                token: null,
+                isAuthenticated: false,
+                isAuthenticating: false
+            };
         default:
             return state;
     }

@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-
+import  { loadState, saveState } from './loadState';
 import reducers from './app/reducers';
+import throttle from 'lodash/throttle';
 
+const persistedState = loadState();
 const configureStore = () => {
-    const persistedState = {};
     const logger = createLogger();
 
     const store = createStore(
@@ -19,11 +20,11 @@ const configureStore = () => {
         )
     );
 
-    store.subscribe(() => {
-        // saveState({
-        //     todos: store.getState()
-        // });
-    });
+    store.subscribe(throttle(() => {
+        saveState({
+            user: store.getState().user
+        });
+    }, 1000));
 
     return store;
 

@@ -16,6 +16,10 @@ export const UserLoginFailed = (error) => ({
     }
 });
 
+export const UserLogout = () => ({
+   type: userEnum.USER_LOGOUT
+});
+
 export const UserPasswordResetSuccess = (response) => ({
     type: userEnum.USER_PASSWORD_RESET_SUCCESS,
     payload: response
