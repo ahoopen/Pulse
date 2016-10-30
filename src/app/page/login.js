@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import KeyHandler, {KEYPRESS} from 'react-key-handler';
 
 import {
     TextField,
@@ -34,12 +35,13 @@ class Login extends Component {
     render() {
         let errMessage = '';
 
-        if(!this.props.isAuthenticated) {
+        if(this.props.statusText) {
             errMessage = <div>User is not authenticated!</div>;
         }
 
         return (
             <Card className="login">
+                <KeyHandler keyEventName={KEYPRESS} keyValue="Enter" onKeyHandle={this.login.bind(this)} />
                 <div>{errMessage}</div>
                 <TextField
                     ref='email'
