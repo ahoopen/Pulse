@@ -2,18 +2,27 @@ import React, {Component} from 'react';
 import '../scss/app.scss';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {AppBar} from 'material-ui';
+import {AppBar, RaisedButton} from 'material-ui';
+import LoggedIn from './components/logged';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
 
+    static contextTypes = {
+        router: React.PropTypes.object
+    };
+
     login() {
-        return <Link to="/login">Login</Link>;
+        return <RaisedButton onClick={() => this.gotoLogin()} >Login</RaisedButton>;
+    }
+
+    gotoLogin() {
+        this.context.router.push('/login');
     }
 
     logged() {
-        return <div>Logged in!</div>;
+        return <LoggedIn />;
     }
 
     renderContent() {
