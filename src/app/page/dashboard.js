@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import Projects from '../components/projects';
+
 class Dashboard extends Component {
 
     render() {
         return (
-            <div>
-                <div id="page">
-                    dit is het dashboard
-                </div>
+            <div className="page">
+                <Projects />
             </div>
         );
     }

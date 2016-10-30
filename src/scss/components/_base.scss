@@ -1,6 +1,11 @@
 @import "login/all";
 @import "registration/all";
+@import "page/all";
 
 body {
     margin: 0;
+}
+
+.app-content {
+    margin-top: 50px;
 }
