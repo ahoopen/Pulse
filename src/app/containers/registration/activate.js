@@ -6,7 +6,8 @@ import {UserLoginSuccess} from '../../actions/user.action';
 import {
     Paper,
     TextField,
-    RaisedButton
+    RaisedButton,
+    Snackbar
 } from 'material-ui';
 
 class Activate extends Component {
@@ -15,10 +16,20 @@ class Activate extends Component {
         router: React.PropTypes.object
     };
 
-    componentWillUpdate(nextProps) {
+    state = {
+        success: false
+    };
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            success: !!nextProps.token
+        });
+
         if (nextProps.token) {
-            this.props.loginSuccess(nextProps.token);
-            this.context.router.push('/dashboard');
+            setTimeout(() => {
+                this.props.loginSuccess(nextProps.token);
+                this.context.router.push('/dashboard');
+            }, 2000);
         }
     }
 
@@ -29,19 +40,25 @@ class Activate extends Component {
 
     render() {
         return (
-            <Paper className="registration">
-                <div>{this.props.errorMessage}</div>
-                <TextField
-                    ref='verifyCode'
-                    floatingLabelText='Verify code'
-                    multiLine={false}
-                    fullWidth={true}
-                />
-                <RaisedButton
-                    primary={true}
-                    label="Activate"
-                    onClick={(e)=> this.activateAccount(e)}/>
-            </Paper>
+            <div>
+                <Paper className="registration">
+                    <div>{this.props.errorMessage}</div>
+                    <TextField
+                        ref='verifyCode'
+                        floatingLabelText='Verify code'
+                        multiLine={false}
+                        fullWidth={true}
+                    />
+                    <RaisedButton
+                        primary={true}
+                        label="Activate"
+                        onClick={(e)=> this.activateAccount(e)}/>
+                </Paper>
+                <Snackbar
+                    open={this.state.success}
+                    message="Account activated"
+                    autoHideDuration={1500}
+                /></div>
         );
     }
 }
