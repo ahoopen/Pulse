@@ -29,7 +29,7 @@ export const UserActivationFailed = (data) => ({
 export const UserActivate = (activateCode) => {
     return (dispatch) => {
 
-        return fetch('http://127.0.0.1:1337/api/user/activate', {
+        return fetch('/api/user/activate', {
             method: 'post',
             headers: {
                 Accept: 'application/json',
@@ -54,7 +54,7 @@ export const UserRegister = (data) => {
     return (dispatch) => {
         dispatch(UserRegisterRequest());
 
-        return fetch('http://127.0.0.1:1337/api/user/register', {
+        return fetch('/api/user/register', {
             method: 'post',
             headers: {
                 Accept: 'application/json',

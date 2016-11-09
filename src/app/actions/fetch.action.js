@@ -15,7 +15,7 @@ export const receiveProtectedData = (response) => ({
 export const fetchData = (token) => {
 
     return (dispatch, state) => {
-        return fetch('http://localhost:1337/api/intern/', {
+        return fetch('/api/intern/', {
             credentials: 'include',
             headers: {
                 'Authorization': `Bearer ${token}`

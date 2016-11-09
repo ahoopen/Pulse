@@ -32,7 +32,7 @@ export const UserPasswordResetFailed = (response) => ({
 
 export const UserPasswordReset = (email) => {
     return (dispatch) => {
-        return fetch('http://127.0.0.1:1337/api/user/password/reset', {
+        return fetch('/api/user/password/reset', {
             method: 'post',
             headers: {
                 Accept: 'application/json',
@@ -61,7 +61,7 @@ export const UserLogin = function (email, password) {
     return (dispatch) => {
         dispatch(UserLoginRequest());
 
-        return fetch('http://127.0.0.1:1337/api/user/login', {
+        return fetch('/api/user/login', {
             method: 'post',
             headers: {
                 Accept: 'application/json',
