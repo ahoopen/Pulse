@@ -1,10 +1,12 @@
 'use strict';
 
 import fs from 'fs';
+import path from 'path';
 import {join} from 'path';
 import express from 'express';
+import compression from 'compression';
 import mongoose from 'mongoose';
-import { config } from 'server/config/config';
+import {config} from 'server/config/config';
 import passport from 'passport';
 const requireAuth = require('server/middleware/passport');
 import services from 'server/services';
@@ -21,14 +23,21 @@ fs.readdirSync(models)
     .forEach(file => require(join(models, file)));
 
 
+app.use('/static/', express.static('static'));
+
+app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 
-const auth = passport.authenticate('jwt', { session: false });
+const auth = passport.authenticate('jwt', {session: false});
 
-app.get('/api/intern', auth, function(req, res) {
-    res.send({ hi: 'there'});
+app.get('/api/intern', auth, function (req, res) {
+    res.send({hi: 'there'});
+});
+
+app.get('*', function (request, response) {
+    response.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // require('server/routes/index')(app);
