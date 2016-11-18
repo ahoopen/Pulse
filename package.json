@@ -51,6 +51,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "axios": "^0.15.2",
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015-node": "^6.1.1",
     "bcrypt-nodejs": "0.0.3",
@@ -63,6 +64,7 @@
     "lodash": "^4.16.4",
     "material-ui": "^0.15.4",
     "mongoose": "4.6.5",
+    "mongoose-class-wrapper": "^0.8.1",
     "node-uuid": "^1.4.7",
     "nodemailer": "2.6.4",
     "npm": "^3.10.8",

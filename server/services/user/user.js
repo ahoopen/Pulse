@@ -66,7 +66,7 @@ class UserHandler {
 
             // // TODO check breaks on production
             // if (process.env.NODE_ENV !== 'test') {
-            //     await this.sendVerifyMail(username, email, verifyId);
+            //     await this.sendVerifyMail(name, email, verifyId);
             // }
 
             response.json({
@@ -86,7 +86,7 @@ class UserHandler {
      * @param verifyId
      */
     sendVerifyMail(username, email, verifyId) {
-        const host = 'wwww.pulse.app';
+        const host = 'http://localhost:3000';
         // send email
         const verifyLink = `http://${host}/api/user/verify/${verifyId}`;
         const text = `Hi ${username},
@@ -188,7 +188,7 @@ class UserHandler {
 
 
     async resetPassword(request, response) {
-        const host = 'www.pulse.app';
+        const host = 'http://localhost:3000';
         const {email} = request.body;
         const resetId = uuid.v4();
 

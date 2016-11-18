@@ -9,6 +9,8 @@ import Activate from './app/containers/registration/activate';
 import PasswordReset from './app/containers/registration/password-reset';
 import PasswordChange from './app/containers/registration/password-change';
 import Dashboard from './app/page/dashboard';
+import Team from './app/containers/team/team';
+import AddTeam from './app/containers/team/addTeam';
 import requireAuthentication from './app/components/authentication';
 
 const test = React.createClass({
@@ -26,9 +28,13 @@ const Root = ({store}) => (
                 <Route path='login' component={Login}/>
                 <Route path='activate' component={Activate}/>
                 <Route path='dashboard' component={requireAuthentication(Dashboard)}/>
+                <Route path='team'>
+                    <IndexRoute component={requireAuthentication(Team)}/>
+                    <Route path='add' component={AddTeam}/>
+                </Route>
                 <Route path='password'>
-                    <Route path='forgotten' component={PasswordReset} />
-                    <Route path='change/:id' component={PasswordChange} />
+                    <Route path='forgotten' component={PasswordReset}/>
+                    <Route path='change/:id' component={PasswordChange}/>
                 </Route>
             </Route>
         </Router>

@@ -36,12 +36,12 @@ app.get('/api/intern', auth, function (req, res) {
     res.send({hi: 'there'});
 });
 
+// require('server/routes/index')(app);
+services(app);
+
 app.get('*', function (request, response) {
     response.sendFile(path.join(__dirname, 'index.html'));
 });
-
-// require('server/routes/index')(app);
-services(app);
 
 connect()
     .on('error', console.log)

@@ -7,6 +7,13 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 export default (app) => {
 
+    app.route('/api/user/all')
+        .get((request, response) => {
+            UserModel.getUserList()
+                .then((data) => response.json(data))
+                .catch((err) => console.log);
+        });
+
     app.route('/api/user/login')
         .get((request, response) => {
             UserModel.find({}, (err, users) => {

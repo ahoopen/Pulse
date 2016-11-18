@@ -87,6 +87,19 @@ const encryptPassword = function (field) {
     });
 };
 
+UserSchema.statics.getUserList = function () {
+    return new Promise((resolve, reject) => {
+        this.find({isValidEmail: true})
+            .select('name lastname email _id')
+            .exec((err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(result);
+            });
+    });
+};
+
 UserSchema.statics.findUser = function ({email, password}) {
     return new Promise((resolve, reject) => {
         this.findOne({
