@@ -8,19 +8,20 @@ class ProjectMemberField extends Component {
 
     render() {
         return (
+
             <TableRow>
                 <TableRowColumn>
                     <AutoComplete
                         name="dasdsad"
-                        searchText="placeholde text.."
-                        id={`${this.props.field.id}`}
+                        hintText={`${this.props.text}`}
+                        id={`${this.props.id}`}
                         dataSource={this.props.users}
-                        onNewRequest={this.props.onChange}
+                        onNewRequest={(e) => this.props.onChange(e, this.props.id)}
                         fullWidth={true}
                     />
                 </TableRowColumn>
                 <TableRowColumn>
-                    <DeleteIcon onClick={() => this.props.handleRemove(this.props.field.id) }/>
+                    <DeleteIcon onClick={() => this.props.handleRemove(this.props.id) }/>
                 </TableRowColumn>
             </TableRow>);
     }

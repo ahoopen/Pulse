@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, RaisedButton} from 'material-ui';
 
-import {addTeamFieldAction, removeTeamFieldAction} from '../../reducers/team';
+import {addTeamFieldAction, removeTeamFieldAction, updateTeamFieldAction} from '../../reducers/team';
 import {getUsers} from '../../api/user';
 import ProjectMemberField from '../../components/projectMemberField';
 
@@ -11,9 +11,7 @@ import ProjectMemberField from '../../components/projectMemberField';
  */
 class TeamList extends Component {
 
-    state = {
-        teamMembers: []
-    };
+    state = {};
 
     componentWillMount() {
         getUsers('all').then(response => {
@@ -21,40 +19,6 @@ class TeamList extends Component {
         }, (err) => {
             console.log('err: getUsers::ALL');
         });
-    }
-
-    /**
-     * Add a new team member field.
-     * A redux action triggers a increase of fields
-     */
-    addTeamMemberField() {
-        this.props.addProjectMemberField();
-    }
-
-    /**
-     * Adds a chosem user to the members array.
-     * the chosen is an object: { text: 'username', value: 'userid' }
-     *
-     * @param chosenTeamMember
-     */
-    addMemberToList(chosenTeamMember) {
-        const teamMembers = [...this.state.teamMembers, chosenTeamMember];
-        this.setState({teamMembers});
-    }
-
-    /**
-     * Removes a member field and updates the redux state
-     *
-     * @param memberId
-     */
-    removeMemberFromList(memberId) {
-        const teamMembers = [
-            ...this.state.teamMembers.slice(0, memberId),
-            ...this.state.teamMembers.slice(memberId + 1)
-        ];
-
-        this.props.removeProjectMemberField(memberId);
-        this.setState({teamMembers});
     }
 
     /**
@@ -72,11 +36,11 @@ class TeamList extends Component {
     renderProjectMemberFields(field) {
         return (
             <ProjectMemberField
+                {...field}
                 key={field.id}
                 users={this.getAutoCompleteSource()}
-                field={field}
-                onChange={this.addMemberToList.bind(this)}
-                handleRemove={this.removeMemberFromList.bind(this)}
+                onChange={this.props.updateProjectMemberField}
+                handleRemove={this.props.removeProjectMemberField}
             />
         );
     }
@@ -87,7 +51,7 @@ class TeamList extends Component {
      * @returns {Array|*}
      */
     memberList() {
-        return this.props.projectMemberFields.map((field) => this.renderProjectMemberFields(field));
+        return this.props.teamMemberField.map((field) => this.renderProjectMemberFields(field));
     }
 
     render() {
@@ -111,7 +75,7 @@ class TeamList extends Component {
                 <RaisedButton
                     primary={true}
                     label="Add team member"
-                    onClick={()=> this.addTeamMemberField()}/>
+                    onClick={this.props.addProjectMemberField}/>
             </div>
         );
     }
@@ -124,17 +88,35 @@ class TeamList extends Component {
  */
 const mapDispatchToProps = dispatch => ({
 
+    /**
+     * Add new project member field
+     */
     addProjectMemberField() {
         dispatch(addTeamFieldAction());
     },
 
-    removeProjectMemberField(index) {
-        dispatch(removeTeamFieldAction(index));
+    /**
+     * Adds a chosen user to the team reducer.
+     * the chosen is an object: { text: 'username', value: 'userid' }
+     *
+     * @param chosenTeamMember
+     * @param id field id
+     */
+    updateProjectMemberField(chosenTeamMember, id) {
+        dispatch(updateTeamFieldAction({ ...chosenTeamMember, id }));
+    },
+
+    /**
+     * Removes project member field
+     * @param id project member field id
+     */
+    removeProjectMemberField(id) {
+        dispatch(removeTeamFieldAction(id));
     }
 });
 
 const mapStateToProps = state => ({
-    projectMemberFields: state.team
+    teamMemberField: state.team
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamList);
