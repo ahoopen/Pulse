@@ -64,8 +64,8 @@ class TeamList extends Component {
                 <Table className="team-list">
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow className="team-list-header">
-                            <TableHeaderColumn className="team-list-header__label">Team members</TableHeaderColumn>
-                            <TableHeaderColumn className="team-list-header__action">Action</TableHeaderColumn>
+                            <TableHeaderColumn className="team-list__label">Team members</TableHeaderColumn>
+                            <TableHeaderColumn className="team-list__action">Action</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>

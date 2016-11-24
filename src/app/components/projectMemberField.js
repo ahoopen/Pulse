@@ -21,10 +21,7 @@ class ProjectMemberField extends Component {
                         fullWidth={true}
                     />
                 </TableRowColumn>
-                <TableRowColumn style={{
-                    width: '30%',
-                    textAlign: 'center'
-                }}>
+                <TableRowColumn className="team-list__action">
                     <DeleteIcon onClick={() => this.props.handleRemove(this.props.id) }/>
                 </TableRowColumn>
             </TableRow>);

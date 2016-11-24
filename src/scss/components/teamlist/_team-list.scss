@@ -3,20 +3,20 @@
 
     .team-list-header {
         background-color: #424242;
+    }
 
-        .team-list-header__label,
-        .team-list-header__action {
-            font-size: 16px !important;
-        }
+    .team-list__label,
+    .team-list__action {
+        font-size: 16px !important;
+    }
 
-        .team-list-header__label {
-            width: 70%;
-        }
+    .team-list__label {
+        width: 70%;
+    }
 
-        .team-list-header__action {
-            width: 30%;
-            text-align: center !important;
-        }
+    .team-list__action {
+        width: 30%;
+        text-align: center !important;
     }
 
     .team-list__footer {
