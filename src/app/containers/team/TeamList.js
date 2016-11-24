@@ -61,17 +61,26 @@ class TeamList extends Component {
 
         return (
             <div>
-                <Table>
-                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                <Table className="teamlist">
+                    <TableHeader style={{
+                        backgroundColor: '#424242'
+                    }} displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
-                            <TableHeaderColumn>Team member</TableHeaderColumn>
-                            <TableHeaderColumn>Action</TableHeaderColumn>
+                            <TableHeaderColumn style={{
+                                fontSize: '16px'
+                            }}>Teammembers</TableHeaderColumn>
+                            <TableHeaderColumn style={{
+                                width: '30%',
+                                fontSize: '16px',
+                                textAlign: 'center'
+                            }}>Action</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
                         { this.memberList() }
                     </TableBody>
                 </Table>
+
                 <RaisedButton
                     primary={true}
                     label="Add team member"

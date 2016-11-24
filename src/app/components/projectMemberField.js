@@ -9,18 +9,23 @@ class ProjectMemberField extends Component {
     render() {
         return (
 
-            <TableRow>
-                <TableRowColumn>
+            <TableRow displayBorder={false }>
+                <TableRowColumn style={{
+                    width: '70%'
+                }}>
                     <AutoComplete
-                        name="dasdsad"
                         hintText={`${this.props.text}`}
                         id={`${this.props.id}`}
                         dataSource={this.props.users}
                         onNewRequest={(e) => this.props.onChange(e, this.props.id)}
+                        floatingLabelText="Team member"
                         fullWidth={true}
                     />
                 </TableRowColumn>
-                <TableRowColumn>
+                <TableRowColumn style={{
+                    width: '30%',
+                    textAlign: 'center'
+                }}>
                     <DeleteIcon onClick={() => this.props.handleRemove(this.props.id) }/>
                 </TableRowColumn>
             </TableRow>);
