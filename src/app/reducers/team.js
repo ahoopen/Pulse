@@ -19,7 +19,7 @@ export const removeTeamFieldAction = (id) => ({
 
 const initialState = [{
     id: 0,
-    text: 'placeholder text'
+    text: 'Enter the name of your team member'
 }];
 
 const teamFieldReducer = ( (state = initialState, action) => {
@@ -27,7 +27,7 @@ const teamFieldReducer = ( (state = initialState, action) => {
         case ADD_TEAM_FIELD:
             return [...state, {
                 id: state.reduce((maxId, field) => Math.max(field.id, maxId), -1) + 1,
-                text: 'placeholder text'
+                text: 'Enter the name of your team member'
             }];
         case REMOVE_TEAM_FIELD:
             return state.filter(field =>
