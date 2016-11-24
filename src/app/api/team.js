@@ -12,6 +12,10 @@ export function createTeam(team) {
     return postData('/api/team/create', team);
 }
 
+export function listTeams() {
+    return getData('/api/team/list');
+}
+
 export function updateTeam(team) {
     return postData('/api/team/update', team);
 }

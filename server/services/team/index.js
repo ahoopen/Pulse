@@ -5,7 +5,22 @@ export default (app) => {
 
     app.route('/api/team/create')
         .post(async(request, response) => {
-            const team = await TeamModel.create(request.body);
+            const {
+                name,
+                project,
+                teamMembers
+            } = request.body;
+
+            // create team
+            const team = await TeamModel.create({
+                name,
+                project
+            });
+
+            // add team members to the team
+            for (let member of teamMembers) {
+                await team.addTeamMember(member);
+            }
 
             if (team) {
                 response.json({
@@ -14,29 +29,40 @@ export default (app) => {
                 });
             }
 
-            // const user = await UserModel.findOne({email: 'a.tenhoopen+1@gmail.com'});
-            // await team.addUser(user);
-
-
-            // TeamModel.getTeamMemberListById({id: '582b28f2ed48da6468e6d608'})
+            // TeamModel.getTeamMemberListById({
+            //     id: team._id
+            // })
             //     .then((result) => {
-            //         response.json(result);
+            //         console.log(result);
             //     })
             //     .catch((err) => console.log);
+
         });
 
-    app.route('/api/team/remove')
-        .post(async(request, response) => {
-            const {id} = response.body;
+    app.route('/api/team/list')
+        .get(async(request, response) => {
+            const teams = await TeamModel.getAllTeams();
 
-            TeamModel.remove({_id: id}).then(() => response.json({
-                success: true
-            }));
+            response.json({
+                teams
+            });
+        });
+
+    app.route('/api/team/delete')
+        .post(async(request, response) => {
+            const {_id} = request.body;
+
+            await TeamModel.remove({_id});
+            const teams = await TeamModel.getAllTeams();
+
+            response.json({
+                teams
+            });
         });
 
     app.route('/api/team/update')
         .post(async(request, response) => {
-            TeamModel.findByIdAndUpdate(id, response.body, {new: true})
+            TeamModel.findByIdAndUpdate(id, request.body, {new: true})
                 .then(() => response.json({
                     success: true
                 }));

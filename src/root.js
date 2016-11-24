@@ -11,6 +11,7 @@ import PasswordChange from './app/containers/registration/password-change';
 import Dashboard from './app/page/dashboard';
 import Team from './app/containers/team/team';
 import AddTeam from './app/containers/team/addTeam';
+import DeleteTeam from './app/containers/team/deleteTeam';
 import requireAuthentication from './app/components/authentication';
 
 const test = React.createClass({
@@ -31,6 +32,8 @@ const Root = ({store}) => (
                 <Route path='team'>
                     <IndexRoute component={requireAuthentication(Team)}/>
                     <Route path='add' component={AddTeam}/>
+                    <Route path='edit/:id' component={AddTeam} />
+                    <Route path='delete' component={DeleteTeam} />
                 </Route>
                 <Route path='password'>
                     <Route path='forgotten' component={PasswordReset}/>

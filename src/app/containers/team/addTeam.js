@@ -3,47 +3,54 @@ import {connect} from 'react-redux';
 import {TextField, RaisedButton, Snackbar, Paper} from 'material-ui';
 
 import TeamList from './TeamList';
+import { createTeam } from '../../api/team';
 
 class AddTeam extends Component {
+
+    static contextTypes = {
+        router: React.PropTypes.object
+    };
 
     state = {
         success: false,
     };
 
     addTeam() {
-        // this.setState({ loading: true });
-
         const data = {
-            name: this.refs.name.getValue()
+            name: this.refs.name.getValue(),
+            project: this.refs.project.getValue(),
+            teamMembers: this.mapTeamListToUserData()
         };
 
-        console.log(this.state, this.props.teamlist);
-        // createTeam(data).then(response => {
-        //     this.setState(response.data);
-        // });
+        createTeam(data)
+            .then(response => this.setState(response.data))
+            .then(() => setTimeout(() => this.context.router.push('/dashboard'), 2000))
+            .catch(error => console.log);
+    }
+
+    mapTeamListToUserData() {
+        return this.props.teamlist.map((user) => ({
+            _id: user.value
+        }));
     }
 
     render() {
         return (
             <Paper className="page team">
                 <h4>Create team</h4>
-                <form>
-                    <TextField
-                        id="1"
-                        ref='name'
-                        floatingLabelText='Team name'
-                        multiLine={false}
-                        fullWidth={true}
-                    />
-                    <TextField
-                        id="2"
-                        ref='project'
-                        floatingLabelText='Project'
-                        multiLine={false}
-                        fullWidth={true}
-                    />
-                </form>
 
+                <TextField
+                    ref='name'
+                    floatingLabelText='Team name'
+                    multiLine={false}
+                    fullWidth={true}
+                />
+                <TextField
+                    ref='project'
+                    floatingLabelText='Project'
+                    multiLine={false}
+                    fullWidth={true}
+                />
 
                 <TeamList />
 

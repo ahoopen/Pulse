@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AutoComplete} from 'material-ui';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
-
 import {TableRow, TableRowColumn} from 'material-ui';
 
 class ProjectMemberField extends Component {
@@ -9,7 +8,7 @@ class ProjectMemberField extends Component {
     render() {
         return (
 
-            <TableRow >
+            <TableRow>
                 <TableRowColumn>
                     <AutoComplete
                         underlineShow={false}

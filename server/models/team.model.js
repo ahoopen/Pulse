@@ -3,7 +3,9 @@ import loadClass from 'mongoose-class-wrapper';
 
 const teamSchema = new Mongoose.Schema({
     name: {type: String, required: true},
-    projects: [{type: Schema.Types.ObjectId, ref: 'project'}],
+    project: { type: String },
+    // projects: [{type: Schema.Types.ObjectId, ref: 'project'}],
+    organization: { type: String },
     members: [{type: Schema.Types.ObjectId, ref: 'user'}]
 });
 
@@ -12,12 +14,12 @@ class TeamModel {
     /**
      * Add user to a team
      *
-     * @param user
+     * @param userId
      * @returns {Promise}
      */
-    addUser(user) {
+    addTeamMember(userId) {
         return new Promise((resolve, reject) => {
-            this.members.push(user);
+            this.members.push(userId);
 
             this.save(function (err, result) {
                 if (err) {
@@ -59,6 +61,11 @@ class TeamModel {
                     resolve(result);
                 });
         });
+    }
+
+    static getAllTeams() {
+        return this.find()
+            .populate('members', '_id name lastname email');
     }
 }
 
