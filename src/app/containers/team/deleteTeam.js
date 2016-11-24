@@ -20,13 +20,13 @@ class ListTeamOrganization extends Component {
         })
     }
 
-    confirmDeleteTeam() {
+    confirmDeleteTeam = () => {
         deleteTeam(this.state.team).then(({data}) => {
             this.setState({ ...data,
                 deleteTeam: false
             })
         });
-    }
+    };
 
     renderTeam(team) {
         return (
@@ -49,7 +49,7 @@ class ListTeamOrganization extends Component {
                 message={`Are you sure you want to delete: ${this.state.team.name}`}
                 confirmLabel="Delete"
                 onCancel={()=> this.setState({deleteTeam: false})}
-                onConfirmHandler={() => this.confirmDeleteTeam}
+                onConfirmHandler={this.confirmDeleteTeam}
             />;
         }
     }
