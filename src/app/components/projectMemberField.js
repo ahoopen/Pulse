@@ -9,11 +9,10 @@ class ProjectMemberField extends Component {
     render() {
         return (
 
-            <TableRow displayBorder={false }>
-                <TableRowColumn style={{
-                    width: '70%'
-                }}>
+            <TableRow >
+                <TableRowColumn>
                     <AutoComplete
+                        underlineShow={false}
                         hintText={`${this.props.text}`}
                         id={`${this.props.id}`}
                         dataSource={this.props.users}

@@ -1,0 +1,25 @@
+.team-list {
+    margin-top: -1px;
+
+    .team-list-header {
+        background-color: #424242;
+
+        .team-list-header__label,
+        .team-list-header__action {
+            font-size: 16px !important;
+        }
+
+        .team-list-header__label {
+            width: 70%;
+        }
+
+        .team-list-header__action {
+            width: 30%;
+            text-align: center !important;
+        }
+    }
+
+    .team-list__footer {
+        text-align: right !important;
+    }
+}

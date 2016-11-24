@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, RaisedButton} from 'material-ui';
+import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, FlatButton} from 'material-ui';
 
 import {addTeamFieldAction, removeTeamFieldAction, updateTeamFieldAction} from '../../reducers/team';
 import {getUsers} from '../../api/user';
@@ -60,31 +60,30 @@ class TeamList extends Component {
         }
 
         return (
-            <div>
-                <Table className="teamlist">
-                    <TableHeader style={{
-                        backgroundColor: '#424242'
-                    }} displaySelectAll={false} adjustForCheckbox={false}>
-                        <TableRow>
-                            <TableHeaderColumn style={{
-                                fontSize: '16px'
-                            }}>Teammembers</TableHeaderColumn>
-                            <TableHeaderColumn style={{
-                                width: '30%',
-                                fontSize: '16px',
-                                textAlign: 'center'
-                            }}>Action</TableHeaderColumn>
+            <div className="team__team-list">
+                <Table className="team-list">
+                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                        <TableRow className="team-list-header">
+                            <TableHeaderColumn className="team-list-header__label">Team members</TableHeaderColumn>
+                            <TableHeaderColumn className="team-list-header__action">Action</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
                         { this.memberList() }
                     </TableBody>
+                    <TableFooter adjustForCheckbox={false}>
+                        <TableRow>
+                            <TableHeaderColumn className="team-list__footer">
+                            <FlatButton
+                                primary={true}
+                                label="Add new team member"
+                                className="teamlist__add-team-member"
+                                onClick={this.props.addProjectMemberField}
+                            />
+                                </TableHeaderColumn>
+                        </TableRow>
+                    </TableFooter>
                 </Table>
-
-                <RaisedButton
-                    primary={true}
-                    label="Add team member"
-                    onClick={this.props.addProjectMemberField}/>
             </div>
         );
     }

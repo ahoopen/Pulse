@@ -1,9 +1,12 @@
 @import "login/all";
 @import "registration/all";
 @import "page/all";
+@import "teamlist/all";
+@import "team/all";
 
 body {
     margin: 0;
+    background-color: $grey;
 }
 
 .app-content {
